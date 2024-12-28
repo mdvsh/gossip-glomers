@@ -19,7 +19,8 @@ These patterns show up everywhere in distributed systems, so it's good to get th
 
 ### Testing It
 ```bash
-go build
+go build # in cmd/<proj> dir
+# run binary
 ./maelstrom test -w echo --bin ./echo --node-count 1 --time-limit 10
 ```
 

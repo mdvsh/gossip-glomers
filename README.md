@@ -1,13 +1,15 @@
 ## glomers
 
- wrapped up distributed systems in college and loved it. Built a replicated, sharded key-value store with Paxos, and now I'm diving deeper into distributed systems patterns through [Fly.io's](https://fly.io/dist-sys/) challenges _(gossip glomers)_
+ Wrapped up distributed systems (eecs491) in college and loved it. There, I built a replicated, sharded key-value store with Paxos, and now am diving deeper into dist-sys patterns through [Fly.io's](https://fly.io/dist-sys/) challenges _(gossip glomers)_.
 
 ### What's Here
 Working through a series of distributed systems challenges, each one building on the last:
 
-1. [**Echo**](/cmd/echo/README.md) - Getting our feet wet with the framework _(done)_
-2. [**Unique ID Generation**](/cmd/uid/README.md) - Making IDs that are actually unique across nodes _(done)_
+1. [**Echo**](/cmd/c1-echo/README.md) - Getting our feet wet with the framework _(done)_
+2. [**Unique ID Generation**](/cmd/c2-uid/README.md) - Making IDs that are actually unique across nodes _(done)_
 3. **Broadcast** - Making nodes talk to each other reliably
+   1. (3a) [Single-Node Broadcast](/cmd/c3-broadcast/v1-single-node/README.md) _(done)_
+   2. (3b) Multi-Node Broadcast _(in progress)_
 4. **Grow-Only Counter** - Building a CRDT (fancy distributed counter)
 5. **Kafka-Style Log** - Implementing a distributed log with some Kafka-like properties
 6. **Transaction System** - Finale, handling distributed transactions

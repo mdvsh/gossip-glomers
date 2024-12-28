@@ -18,9 +18,12 @@ Why this approach is cool:
 
 ### Testing It
 ```bash
-go build
+go build # in cmd/<proj> dir
+# run binary
 ./maelstrom test -w unique-ids --bin ./unique --time-limit 30 --rate 1000 --node-count 3 --availability total --nemesis partition
 ```
+
+---
 
 ### Why It's Partition Tolerant
 Each node works independently - no need to talk to other nodes to generate IDs. Even if the network splits, each part keeps generating valid, unique IDs. When the partition heals, all IDs are still unique because of the node ID component.
