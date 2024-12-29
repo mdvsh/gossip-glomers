@@ -9,7 +9,7 @@ Working through a series of distributed systems challenges, each one building on
 2. [**Unique ID Generation**](/cmd/c2-uid/README.md) - Making IDs that are actually unique across nodes _(done)_
 3. **Broadcast** - Making nodes talk to each other reliably
    1. (3a) [Single-Node Broadcast](/cmd/c3-broadcast/v1-single-node/README.md) _(done)_
-   2. (3b) Multi-Node Broadcast _(in progress)_
+   2. (3b) [Multi-Node Broadcast](/cmd/c3-broadcast/v2-multi-node/README.md) _(done)_
 4. **Grow-Only Counter** - Building a CRDT (fancy distributed counter)
 5. **Kafka-Style Log** - Implementing a distributed log with some Kafka-like properties
 6. **Transaction System** - Finale, handling distributed transactions

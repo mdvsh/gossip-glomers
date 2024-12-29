@@ -9,8 +9,9 @@ import (
 )
 
 type BroadcastReq struct {
-	Type string `json:"type"`
-	Msg  int    `json:"message"`
+	Type  string `json:"type"`
+	Msg   int    `json:"message"`
+	MsgID int    `json:"msg_id"`
 }
 
 type ReadResp struct {
@@ -18,24 +19,16 @@ type ReadResp struct {
 	Msgs []int  `json:"messages"`
 }
 
-type TopologyReq struct {
-	Type     string              `json:"type"`
-	Topology map[string][]string `json:"topology"`
-}
-
 type server struct {
 	node     *maelstrom.Node
-	msgs     []int
+	msgs     map[int]struct{}
 	msgMutex sync.RWMutex
-	top      map[string][]string
-	topMutex sync.RWMutex
 }
 
 func initServer() *server {
 	return &server{
 		node: maelstrom.NewNode(),
-		msgs: make([]int, 0),
-		top:  make(map[string][]string),
+		msgs: make(map[int]struct{}),
 	}
 }
 
@@ -45,28 +38,37 @@ func (s *server) handleBroadcast(msg maelstrom.Message) error {
 		return err
 	}
 	s.msgMutex.Lock()
-	s.msgs = append(s.msgs, req.Msg)
+	if _, exists := s.msgs[req.Msg]; exists {
+		s.msgMutex.Unlock()
+		return s.node.Reply(msg, map[string]string{"type": "broadcast_ok"})
+	}
+	s.msgs[req.Msg] = struct{}{}
 	s.msgMutex.Unlock()
+	for _, node := range s.node.NodeIDs() {
+		if node == s.node.ID() || node == msg.Src {
+			continue
+		}
+		go func(node string) {
+			if err := s.node.Send(node, req); err != nil {
+				log.Printf("Error propagating message to node %s: %v", node, err)
+			}
+		}(node)
+	}
 	return s.node.Reply(msg, map[string]string{"type": "broadcast_ok"})
-
 }
 
 func (s *server) handleRead(msg maelstrom.Message) error {
-	s.msgMutex.Lock()
-	msgs := make([]int, len(s.msgs))
-	copy(msgs, s.msgs)
-	s.msgMutex.Unlock()
-	return s.node.Reply(msg, ReadResp{Type: "read_ok", Msgs: msgs})
+	s.msgMutex.RLock()
+	msgs := make([]int, 0, len(s.msgs))
+	for msg := range s.msgs {
+		msgs = append(msgs, msg)
+	}
+	s.msgMutex.RUnlock()
+	return s.node.Reply(msg, ReadResp{"read_ok", msgs})
 }
 
 func (s *server) handleTopology(msg maelstrom.Message) error {
-	var req TopologyReq
-	if err := json.Unmarshal(msg.Body, &req); err != nil {
-		return err
-	}
-	s.topMutex.Lock()
-	s.top = req.Topology
-	s.topMutex.Unlock()
+	// ignore topology and broadcast to all nodes
 	return s.node.Reply(msg, map[string]string{"type": "topology_ok"})
 }
 

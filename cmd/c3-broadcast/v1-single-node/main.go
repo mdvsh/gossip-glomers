@@ -48,7 +48,6 @@ func (s *server) handleBroadcast(msg maelstrom.Message) error {
 	s.msgs = append(s.msgs, req.Msg)
 	s.msgMutex.Unlock()
 	return s.node.Reply(msg, map[string]string{"type": "broadcast_ok"})
-
 }
 
 func (s *server) handleRead(msg maelstrom.Message) error {
