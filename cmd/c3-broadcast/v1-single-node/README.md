@@ -22,18 +22,6 @@ Key design choices:
 - RWMutex for better read performance (multiple readers can access simultaneously)
 - Message copying in read handler to prevent external modifications
 
-### Testing It
-```bash
-go build # in cmd/<proj> dir
-# run binary
-./maelstrom test -w broadcast --bin ./broadcast --node-count 1 --time-limit 20 --rate 10
-```
-
-Test validates that:
-- All broadcast messages are stored correctly
-- Read returns everything we've stored
-- Basic message handling works (proper req/resp)
-
 ---
 
 ### Trade-offs

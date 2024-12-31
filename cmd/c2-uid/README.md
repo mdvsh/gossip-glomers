@@ -16,13 +16,6 @@ Why this approach is cool:
 - Basically zero chance of collisions
 - Fast! Just local operations
 
-### Testing It
-```bash
-go build # in cmd/<proj> dir
-# run binary
-./maelstrom test -w unique-ids --bin ./unique --time-limit 30 --rate 1000 --node-count 3 --availability total --nemesis partition
-```
-
 ---
 
 ### Why It's Partition Tolerant

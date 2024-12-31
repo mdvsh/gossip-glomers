@@ -29,21 +29,10 @@ Each new message gets blasted out to all other nodes (except the sender). Using 
 3. **Fast Propagation**: New messages spread in one hop
 4. **Duplicate Prevention**: Map-based deduplication keeps us efficient
 
-### Testing It
-```bash
-go build
-./maelstrom test -w broadcast --bin ./broadcast --node-count 5 --time-limit 20 --rate 10
-```
-
-All tests pass! The system handles:
-- Multiple nodes broadcasting simultaneously
-- Message deduplication
-- Concurrent reads and writes
-
 ## Trade-offs
 **Pros:**
 - Dead simple implementation
-- Super fast message propagation (one hop)
+- fast message propagation (one hop)
 - No topology management needed
 - Easy to reason about
 
