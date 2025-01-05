@@ -14,25 +14,13 @@ Working through a series of dist-sys challenges, each one building on the last:
    4. (3d) Efficient Broadcast
       1. [Part I](/cmd/c3-broadcast/v4-efficieny-pt1/README.md) _(done)_
       2. [Part II](/cmd/c3-broadcast/v4-efficieny-pt2/README.md) _(done)_
-4. **Grow-Only Counter** - Building a CRDT (fancy distributed counter)
+4. [**Grow-Only Counter**](/cmd/c4-grow-ctr/README.md) - Building a CRDT (fancy distributed counter)
 5. **Kafka-Style Log** - Implementing a distributed log with some Kafka-like properties
 6. **Transaction System** - Finale, handling distributed transactions
 
 Each challenge has its own write-up explaining the key ideas and tradeoffs.
 
 ---
-
-### Project Structure
-```
-glomers/
-├── cmd/                    # Challenge implementations
-│   ├── c1-echo/             
-│   ├── c2-uid/               
-|   ├── c3-broadcast/
-│   └── ...             
-├── internal/              # Shared code 
-│   └── transport/      
-```
 
 ### Setup
 

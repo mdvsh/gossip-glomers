@@ -25,7 +25,7 @@ Still with 25 nodes and 100ms latency:
 - ~564ms median latency (limit was 1s, so ton of headroom)
 - ~1077ms max latency (not even close to the 2s limit)
 
-#### Why This Works Better
+### Why This Works Better
 1. **More Patient Batching**: Waiting longer = bigger batches = fewer messages
 2. **Still Good Timing**: 1s interval hits an even sweeter spot
 3. **Same Simple Code**: Didn't have to add any complexity

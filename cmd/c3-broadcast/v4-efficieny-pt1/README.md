@@ -26,7 +26,7 @@ With 25 nodes and 100ms latency:
 - ~300ms median latency (limit was 400ms)
 - ~500ms p99 latency (still under the 600ms limit)
 
-#### Why This Works
+### Why This Works
 1. **Natural Batching**: Multiple messages share the sync cost
 2. **Good Timing**: 500ms interval hits the sweet spot
 3. **Still Fault-Tolerant**: Keeps working through partitions
