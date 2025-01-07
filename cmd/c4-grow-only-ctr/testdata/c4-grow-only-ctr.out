@@ -22,7 +22,7 @@ INFO [2025-01-05 14:28:36,427] main - jepsen.cli Test options:
   "-w"
   "g-counter"
   "--bin"
-  "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin"
+  "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin"
   "--time-limit"
   "20"
   "--rate"
@@ -35,7 +35,7 @@ INFO [2025-01-05 14:28:36,427] main - jepsen.cli Test options:
  :nodes ["n0" "n1" "n2"],
  :test-count 1,
  :latency {:mean 0, :dist :constant},
- :bin "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin",
+ :bin "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin",
  :log-net-recv false,
  :time-limit 20,
  :workload :g-counter,
@@ -43,7 +43,7 @@ INFO [2025-01-05 14:28:36,427] main - jepsen.cli Test options:
  :topology :grid}
 
 INFO [2025-01-05 14:28:36,448] jepsen test runner - jepsen.core Command line:
-lein run test -w g-counter --bin /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin --time-limit 20 --rate 100 --node-count 3 --nemesis partition
+lein run test -w g-counter --bin /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin --time-limit 20 --rate 100 --node-count 3 --nemesis partition
 INFO [2025-01-05 14:28:36,516] jepsen test runner - jepsen.core Running test:
 {:args []
  :remote
@@ -94,7 +94,7 @@ INFO [2025-01-05 14:28:36,516] jepsen test runner - jepsen.core Running test:
   "-w"
   "g-counter"
   "--bin"
-  "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin"
+  "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin"
   "--time-limit"
   "20"
   "--rate"
@@ -116,7 +116,7 @@ INFO [2025-01-05 14:28:36,516] jepsen test runner - jepsen.core Running test:
  :nodes ["n0" "n1" "n2"]
  :test-count 1
  :latency {:mean 0, :dist :constant}
- :bin "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin"
+ :bin "/Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin"
  :generator
  ((jepsen.generator.Synchronize
    {:gen (jepsen.generator.TimeLimit
@@ -224,11 +224,11 @@ INFO [2025-01-05 14:28:37,257] jepsen test runner - jepsen.db Tearing down DB
 INFO [2025-01-05 14:28:37,258] jepsen test runner - jepsen.db Setting up DB
 INFO [2025-01-05 14:28:37,259] jepsen node n1 - maelstrom.db Setting up n1
 INFO [2025-01-05 14:28:37,259] jepsen node n2 - maelstrom.db Setting up n2
-INFO [2025-01-05 14:28:37,259] jepsen node n2 - maelstrom.process launching /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin []
-INFO [2025-01-05 14:28:37,259] jepsen node n1 - maelstrom.process launching /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin []
+INFO [2025-01-05 14:28:37,259] jepsen node n2 - maelstrom.process launching /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin []
+INFO [2025-01-05 14:28:37,259] jepsen node n1 - maelstrom.process launching /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin []
 INFO [2025-01-05 14:28:37,260] jepsen node n0 - maelstrom.service Starting services: (lin-kv lin-tso lww-kv seq-kv)
 INFO [2025-01-05 14:28:37,261] jepsen node n0 - maelstrom.db Setting up n0
-INFO [2025-01-05 14:28:37,261] jepsen node n0 - maelstrom.process launching /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-ctr/bin []
+INFO [2025-01-05 14:28:37,261] jepsen node n0 - maelstrom.process launching /Users/sharmadhavs/dev/projects/glomers/cmd/c4-grow-only-ctr/bin []
 INFO [2025-01-05 14:28:37,476] jepsen test runner - jepsen.core Relative time begins now
 INFO [2025-01-05 14:28:37,486] jepsen worker 1 - jepsen.util 1	:invoke	:read	nil
 INFO [2025-01-05 14:28:37,486] jepsen worker nemesis - jepsen.util :nemesis	:info	:start-partition	:minority-third

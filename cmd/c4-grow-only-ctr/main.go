@@ -12,23 +12,27 @@ import (
 
 const defaultTimeout = time.Second
 
-func main() {
-	n := maelstrom.NewNode()
-	kv := maelstrom.NewSeqKV(n)
-	s := &server{
-		n:          n,
-		kv:         kv,
-		localValue: 0,
-		mu:         sync.Mutex{},
-	}
+type AddReq struct {
+	Type  string `json:"type"`
+	Delta int    `json:"delta"`
+}
 
-	n.Handle("add", s.addHandler)
-	n.Handle("read", s.readHandler)
-	n.Handle("local", s.localHandler)
+type AddResp struct {
+	Type string `json:"type"`
+}
 
-	if err := n.Run(); err != nil {
-		log.Fatalf("node run failed: %v", err)
-	}
+type ReadResp struct {
+	Type  string `json:"type"`
+	Value int    `json:"value"`
+}
+
+type LocalReq struct {
+	Type string `json:"type"`
+}
+
+type LocalResp struct {
+	Type  string `json:"type"`
+	Value int    `json:"value"`
 }
 
 type server struct {
@@ -38,39 +42,11 @@ type server struct {
 	mu         sync.Mutex
 }
 
-// AddRequest represents the "add" message body.
-type AddRequest struct {
-	Type  string `json:"type"`
-	Delta int    `json:"delta"`
-}
-
-// AddResponse represents the "add_ok" message body.
-type AddResponse struct {
-	Type string `json:"type"`
-}
-
-// ReadResponse represents the "read_ok" message body.
-type ReadResponse struct {
-	Type  string `json:"type"`
-	Value int    `json:"value"`
-}
-
-// LocalRequest represents the "local" message body.
-type LocalRequest struct {
-	Type string `json:"type"`
-}
-
-// LocalResponse represents the "local_ok" message body.
-type LocalResponse struct {
-	Type  string `json:"type"`
-	Value int    `json:"value"`
-}
-
 func (s *server) addHandler(msg maelstrom.Message) error {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 
-	var req AddRequest
+	var req AddReq
 	if err := json.Unmarshal(msg.Body, &req); err != nil {
 		log.Printf("node %s: failed to unmarshal add request: %v", s.n.ID(), err)
 		return err
@@ -86,7 +62,7 @@ func (s *server) addHandler(msg maelstrom.Message) error {
 		return err
 	}
 
-	return s.n.Reply(msg, AddResponse{Type: "add_ok"})
+	return s.n.Reply(msg, AddResp{Type: "add_ok"})
 }
 
 func (s *server) readHandler(msg maelstrom.Message) error {
@@ -104,19 +80,17 @@ func (s *server) readHandler(msg maelstrom.Message) error {
 
 			var value int
 			if nodeID == s.n.ID() {
-				// Read local value
 				s.mu.Lock()
 				value = s.localValue
 				s.mu.Unlock()
 			} else {
-				// Read remote value
-				res, err := s.n.SyncRPC(ctx, nodeID, LocalRequest{Type: "local"})
+				res, err := s.n.SyncRPC(ctx, nodeID, LocalReq{Type: "local"})
 				if err != nil {
 					log.Printf("node %s: failed to read from node %s: %v", s.n.ID(), nodeID, err)
 					return
 				}
 
-				var resp LocalResponse
+				var resp LocalResp
 				if err := json.Unmarshal(res.Body, &resp); err != nil {
 					log.Printf("node %s: failed to unmarshal local response from node %s: %v", s.n.ID(), nodeID, err)
 					return
@@ -132,7 +106,7 @@ func (s *server) readHandler(msg maelstrom.Message) error {
 
 	wg.Wait()
 
-	return s.n.Reply(msg, ReadResponse{
+	return s.n.Reply(msg, ReadResp{
 		Type:  "read_ok",
 		Value: sum,
 	})
@@ -142,8 +116,27 @@ func (s *server) localHandler(msg maelstrom.Message) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	return s.n.Reply(msg, LocalResponse{
+	return s.n.Reply(msg, LocalResp{
 		Type:  "local_ok",
 		Value: s.localValue,
 	})
+}
+
+func main() {
+	n := maelstrom.NewNode()
+	kv := maelstrom.NewSeqKV(n)
+	s := &server{
+		n:          n,
+		kv:         kv,
+		localValue: 0,
+		mu:         sync.Mutex{},
+	}
+
+	n.Handle("add", s.addHandler)
+	n.Handle("read", s.readHandler)
+	n.Handle("local", s.localHandler)
+
+	if err := n.Run(); err != nil {
+		log.Fatalf("node run failed: %v", err)
+	}
 }
