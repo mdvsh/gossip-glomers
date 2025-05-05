@@ -3,7 +3,7 @@
  Wrapped up distributed systems (eecs491) in college and loved it. There, I built a replicated, sharded key-value store with Paxos, and now am diving deeper into dist-sys patterns through [Fly.io's](https://fly.io/dist-sys/) challenges.
 
 ### What's Here
-Working through a series of dist-sys challenges, each one building on the last:
+a series of dist-sys challenges, each one building on the last:
 
 1. [**Echo**](/cmd/c1-echo/README.md) - Getting our feet wet with the framework _(done)_
 2. [**Unique ID Generation**](/cmd/c2-uid/README.md) - Making IDs that are actually unique across nodes _(done)_
@@ -17,6 +17,8 @@ Working through a series of dist-sys challenges, each one building on the last:
 4. [**Grow-Only Counter**](/cmd/c4-grow-only-ctr/README.md) - Building a CRDT (fancy distributed counter)
 5. **Kafka-Style Log** - Implementing a distributed log with some Kafka-like properties
    1. (5a) [Single-Node Kafka-Style Log](/cmd/c5-kafka-style-log/v1-single-node/README.md) _(done)_
+   2. (5b) [Multi-Node Kafka-Style Log](/cmd/c5-kafka-style-log/v2-multi-node/README.md) _(done)_
+   3. (5c) [Efficient Multi-Node Kafka-Style Log](/cmd/c5-kafka-style-log/v3-multi-node-efficient/README.md) _(done)_
 6. **Transaction System** - Finale, handling distributed transactions
 
 Each challenge has its own write-up explaining the key ideas and tradeoffs.
